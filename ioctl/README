@@ -8,4 +8,4 @@
 03. Unload module & clean binaries
 	$ rmmod code
 	$ make clean
-	$ rm mmap
+	$ rm ioctl
