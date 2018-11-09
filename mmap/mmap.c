@@ -26,7 +26,7 @@ int main(void)
 		 * Do check, backend mmap driver is loaded
 		 */
 		printf("open failed\n");
-		printf("make sure insmod km.ko is done\n");
+		printf("make sure insmod code.ko is done\n");
 		return -1;
 	}
 
