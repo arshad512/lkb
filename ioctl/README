@@ -1,0 +1,11 @@
+01. Compile & load module
+	$ make
+	$ insmod code.ko
+
+02. Compile ioctl.c
+	gcc -o ioctl ioctl.c
+
+03. Unload module & clean binaries
+	$ rmmod code
+	$ make clean
+	$ rm mmap
