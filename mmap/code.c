@@ -90,7 +90,7 @@ static struct file_operations fops =
 	.release = dev_release,
 };
 
-static int __init lkm_init(void)
+static int __init mmap_example_init(void)
 {
 	int ret;
 
@@ -156,13 +156,13 @@ int dev_mmap(struct file *filep, struct vm_area_struct *vma)
 	return rc;
 }
 
-static void __exit lkm_exit(void) {
+static void __exit mmap_example_exit(void) {
 	if(buffer)
 		kfree(buffer);
 	unregister_chrdev(majorNumber, DEVICE_NAME);
 	printk(KERN_INFO "Goodbye, World!\n");
 }
 
-module_init(lkm_init);
-module_exit(lkm_exit);
+module_init(mmap_example_init);
+module_exit(mmap_example_exit);
 
