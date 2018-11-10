@@ -1,2 +1,2 @@
 # lkb
-the linux kernel book
+The linux kernel programming guide.
