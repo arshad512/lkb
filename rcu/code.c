@@ -22,14 +22,14 @@ MODULE_AUTHOR("Arshad Hussain <arshad.super@gmail.com>");
  * What this means is that with mostly reads the performance would be very fast.
  * As there would be no race. For race to happen there must be at-least one write.
  * If there are no writes and only reads there will be no race. With write coming
- * occacionally and in-between,the only synchnonrizaiton required would be when
+ * occasionally and in-between,the only synchronization required would be when
  * "update" or an actual write will happen.
  *
  * The engine that drives RCU is the "publishing protocol". What this says it that
- * the multiple readers could happly read a shared resouce within a rcu_lock(), and
+ * the multiple readers could happily read a shared resource within a rcu_lock(), and
  * when a writer is about to update a value it will stop the readers from reading the
- * shared resouce. Then the writer would update the value and enable the readers to
- * again read the upadted value.
+ * shared resource. Then the writer would update the value and enable the readers to
+ * again read the updated value.
  *
  * For example:
  *
@@ -38,7 +38,7 @@ MODULE_AUTHOR("Arshad Hussain <arshad.super@gmail.com>");
  *
  * Now,
  * 50 reader threads are reading.
- * 20 reader threads are idle not doing anyting.
+ * 20 reader threads are idle not doing anything.
  *
  * So, All 50 reader thread would be doing the below individually... Remember, no
  * reader will borrow the pointer of other. Stale rcu_read_lock() is not valid.
@@ -47,7 +47,7 @@ MODULE_AUTHOR("Arshad Hussain <arshad.super@gmail.com>");
  * rcu_read_unlock()
  *
  * During update/write of a value. A single writer thread will make
- * the shared data not accaible by new reader. In this case that 20 threads now
+ * the shared data not accessible by new reader. In this case that 20 threads now
  * cannot access the shared data. Secondly, it will wait for the reader threads
  * which has already seen the old value. In this case it is 50 threads, which already
  * saw the old value and was processing them. That is is done by writer thread by
@@ -70,7 +70,7 @@ struct mylist {
 	 * to use RCU for update and lookup
 	 *
 	 * Each update will have a new rcu_head. The old rcu_head is hidden from
-	 * readers and not deleted this gives preformance improvement.
+	 * readers and not deleted this gives performance improvement.
 	 */
 	struct rcu_head rcu;
 };
@@ -88,7 +88,7 @@ static void destroy_old_structure(struct rcu_head *rcu_h)
 	t = container_of(rcu_h, struct mylist, rcu);
 	printk(KERN_INFO "Deleted old reference\n");
 	if (!t) {
-		printk(KERN_INFO "Value (t) not valid. will exit.\n");
+		printk(KERN_INFO "Value (t) not valid. Will exit.\n");
 		return;
 	}
 	/* this node should be deleted, node where data is 20 */
@@ -131,19 +131,19 @@ static int __init start(void)
 	 * Also code must not sleep within rcu read lock held.
 	 */
 	list_for_each_entry(tmp1, &head_mylist, node) {
-		/* This is actually only disable premetion */
+		/* This is actually only disable preemption */
 		rcu_read_lock();
 
 		/* access shared data */
 		printk(KERN_ERR "value(0) = %d\n", tmp1->data);
 
-		/* enable premeption */
+		/* enable preemption */
 		rcu_read_unlock();
 	}
 
 	/*
 	 *  Wait for all readers to finish. This ensures that there
-	 *  is no reader in criticle section and older refrence (rcu_head)
+	 *  is no reader in critical section and older reference (rcu_head)
 	 *  could be deleted.
 	 */
 	synchronize_rcu();
