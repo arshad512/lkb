@@ -197,7 +197,7 @@ static int __init start(void)
 	 * WRITER (delete)
 	 *
 	 * 01. Delete node with value == 20
-	 * 02. Del struct (list_replace_rcu)
+	 * 02. Del struct (list_del_rcu)
 	 */
 	flag=0;
 	spin_lock(&mylist_lock);
@@ -211,6 +211,7 @@ static int __init start(void)
 		if (tmp1->data == 20) {
 			// Delete node from RCU protected list
 			flag = 1;
+			/* Delete a node in a rcu protected list */
 			list_del_rcu(&tmp1->node);
 			spin_unlock(&mylist_lock);
 			/*
