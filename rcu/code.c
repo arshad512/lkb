@@ -87,10 +87,12 @@ static void destroy_old_structure(struct rcu_head *rcu_h)
 	struct mylist *t = NULL;
 	t = container_of(rcu_h, struct mylist, rcu);
 	printk(KERN_INFO "Deleted old reference\n");
-	if (t) {
-		/* this node should be deleted, node where data is 20 */
-		printk(KERN_INFO "Data = %d\n", t->data);
+	if (!t) {
+		printk(KERN_INFO "Value (t) not valid. will exit.\n");
+		return;
 	}
+	/* this node should be deleted, node where data is 20 */
+	printk(KERN_INFO "Data = %d\n", t->data);
 	//t->data = 0;
 	kfree(t);
 }
