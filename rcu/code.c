@@ -209,9 +209,8 @@ static int __init start(void)
 		 * where i == 2;
 		 */
 		if (tmp1->data == 20) {
-			// Delete node from RCU protected list
 			flag = 1;
-			/* Delete a node in a rcu protected list */
+			/* Delete a node from a rcu protected list */
 			list_del_rcu(&tmp1->node);
 			spin_unlock(&mylist_lock);
 			/*
