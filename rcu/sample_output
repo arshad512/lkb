@@ -1,0 +1,22 @@
+Hello!
+value(0) = 40
+value(0) = 30
+value(0) = 20
+value(0) = 10
+value(0) = 0
+============================
+value(1) = 40
+value(1) = 30
+value(1) = 20
+value(1) = 1400 # 10 replaced with 1400
+value(1) = 0
+============================
+value(2) = 40
+value(2) = 30
+value(2) = 1400
+value(2) = 0
+============================ # Node with value 20 deleted
+Deleted old reference
+Data = 20
+Goodbye
+
