@@ -1,0 +1,543 @@
+=============================================================
+Function index, lists all the function used under the project.
+=============================================================
+WARNING: This is work in progress, better version will come soon...
+
+./mutex1/code.c:#include <linux/delay.h> /* msleep() */
+./mutex1/code.c:MODULE_LICENSE("GPL");
+./mutex1/code.c:MODULE_DESCRIPTION("mutex");
+./mutex1/code.c:MODULE_VERSION("110");
+./mutex1/code.c:MODULE_AUTHOR("Arshad Hussain <arshad.super@gmail.com>");
+./mutex1/code.c: * DEFINE_MUTEX(m)
+./mutex1/code.c: * mutex_init(&m);
+./mutex1/code.c:static int __init start(void)
+./mutex1/code.c:	printk(KERN_INFO "Start...!\n");
+./mutex1/code.c:	mutex_init(&m);
+./mutex1/code.c:	mutex_lock(&m);
+./mutex1/code.c:	i = mutex_is_locked(&m);
+./mutex1/code.c:		printk(KERN_INFO "Mutex is locked\n");
+./mutex1/code.c:		printk(KERN_INFO "Mutex is NOT locked\n");
+./mutex1/code.c:	i = mutex_trylock(&m);
+./mutex1/code.c:		printk(KERN_INFO "mutex_trylock - Mutex was free taken lock\n");
+./mutex1/code.c:		printk(KERN_INFO "mutex_trylock - Mutex already locked, return zero\n");
+./mutex1/code.c:	mutex_unlock(&m);
+./mutex1/code.c:	 * mutex_lock() is not interruptible.
+./mutex1/code.c:	 * use mutex_lock_interruptible() - This can be interrupted
+./mutex1/code.c:	i = mutex_lock_interruptible(&m);
+./mutex1/code.c:		printk(KERN_INFO "mutex_lock_interruptible - Lock taken.\n");
+./mutex1/code.c:		printk(KERN_INFO "mutex_lock_interruptible - Interruptible by signal\n");
+./mutex1/code.c:	mutex_unlock(&m);
+./mutex1/code.c:	 * mutex_lock_killable()
+./mutex1/code.c:	i = mutex_lock_killable(&m);
+./mutex1/code.c:		printk(KERN_INFO "mutex_lock_killable - Lock taken.\n");
+./mutex1/code.c:		printk(KERN_INFO "mutex_lock_killable - Interrupted by kill signal\n");
+./mutex1/code.c:	mutex_unlock(&m);
+./mutex1/code.c:static void __exit stops(void) {
+./mutex1/code.c:	printk(KERN_INFO "Goodbye!\n");
+./mutex1/code.c:module_init(start);
+./mutex1/code.c:module_exit(stops);
+./work_queue_dedicated/code.c:MODULE_LICENSE("GPL");
+./work_queue_dedicated/code.c:MODULE_DESCRIPTION("work queues:- Dedicated");
+./work_queue_dedicated/code.c:MODULE_VERSION("110");
+./work_queue_dedicated/code.c:MODULE_AUTHOR("Arshad Hussain <arshad.super@gmail.com>");
+./work_queue_dedicated/code.c: * Inside function my_interrupt() we add the "work" to the dedicated queue. This will be processed later
+./work_queue_dedicated/code.c: * We associate work_handler() function with the queue. 
+./work_queue_dedicated/code.c: * 	- Inside work_handler() until moving_val is < 14; create a node and add to list.
+./work_queue_dedicated/code.c:void work_handler(struct work_struct *work);
+./work_queue_dedicated/code.c:void print_list(void);
+./work_queue_dedicated/code.c:LIST_HEAD(head);
+./work_queue_dedicated/code.c:int mfoo(void *);
+./work_queue_dedicated/code.c:	 * There is another API queue_delayed_work(), which also does
+./work_queue_dedicated/code.c:	queue_work(wq, &work);
+./work_queue_dedicated/code.c:static int __init start(void)
+./work_queue_dedicated/code.c:	pr_info("***** Hello world! ***** \n");
+./work_queue_dedicated/code.c:	 * function my_interrupt() callback is called.
+./work_queue_dedicated/code.c:	if (request_irq(irq, my_interrupt, IRQF_SHARED, "my_interrupts", &my_dev_id)) { 
+./work_queue_dedicated/code.c:		printk(KERN_INFO "request_irq error %d\n", irq);
+./work_queue_dedicated/code.c:	 * Other API(macro) create_workqueue() will create
+./work_queue_dedicated/code.c:	wq = create_singlethread_workqueue("mydrv");
+./work_queue_dedicated/code.c:	INIT_WORK(&work, work_handler);
+./work_queue_dedicated/code.c:static void __exit stops(void)
+./work_queue_dedicated/code.c:	synchronize_irq(irq);
+./work_queue_dedicated/code.c:	free_irq(irq, &my_dev_id);
+./work_queue_dedicated/code.c:	flush_workqueue(wq);
+./work_queue_dedicated/code.c:	destroy_workqueue(wq);
+./work_queue_dedicated/code.c:	printk(KERN_INFO "Cleaning up module.\n");
+./work_queue_dedicated/code.c:work_handler(struct work_struct *work)
+./work_queue_dedicated/code.c:	spin_lock_init(&sl);
+./work_queue_dedicated/code.c:	spin_lock(&sl);
+./work_queue_dedicated/code.c:		f[moving_val] = kmalloc(sizeof(struct data), GFP_KERNEL);
+./work_queue_dedicated/code.c:			pr_info("kmalloc failed %d\n", moving_val);
+./work_queue_dedicated/code.c:			pr_info("kmalloc passed for  %d\n", moving_val);
+./work_queue_dedicated/code.c:		list_add(&f[moving_val]->next, &head);
+./work_queue_dedicated/code.c:		print_list();
+./work_queue_dedicated/code.c:			pr_info("deleting for  %d\n", i);
+./work_queue_dedicated/code.c:			list_del(&f[i]->next);
+./work_queue_dedicated/code.c:	spin_unlock(&sl);
+./work_queue_dedicated/code.c:void print_list(void)
+./work_queue_dedicated/code.c:	printk("***** Flush *****\n");
+./work_queue_dedicated/code.c:	list_for_each_entry(d, &head, next) {
+./work_queue_dedicated/code.c:		pr_info("link list = %d\n", d->value);
+./work_queue_dedicated/code.c:module_init(start);
+./work_queue_dedicated/code.c:module_exit(stops);
+./kprobe/code.c:MODULE_LICENSE("GPL");
+./kprobe/code.c:MODULE_DESCRIPTION("kprobe - With hardcoded function probe");
+./kprobe/code.c:MODULE_VERSION("110");
+./kprobe/code.c:MODULE_AUTHOR("Arshad Hussain <arshad.super@gmail.com>");
+./kprobe/code.c:int pre_handler(struct kprobe *probe, struct pt_regs *regs)
+./kprobe/code.c:	printk(KERN_INFO "Inside pre_handler.\n");
+./kprobe/code.c:void post_handler(struct kprobe *probe, struct pt_regs *regs, unsigned long flags)
+./kprobe/code.c:	printk(KERN_INFO "Inside POST_handler.\n");
+./kprobe/code.c:static int __init start(void)
+./kprobe/code.c:	printk(KERN_INFO "Entering.....\n");
+./kprobe/code.c:	register_kprobe(&kp);
+./kprobe/code.c:static void __exit stops(void)
+./kprobe/code.c:	unregister_kprobe(&kp);
+./kprobe/code.c:	printk(KERN_INFO "Exiting.....\n");
+./kprobe/code.c:module_init(start);
+./kprobe/code.c:module_exit(stops);
+./container_of/code.c:static int __init start(void)
+./container_of/code.c:	tom.name = kmalloc(25, GFP_KERNEL);
+./container_of/code.c:	strcpy(tom.name, "tom_cat");
+./container_of/code.c:	pr_info("name = %s\n", tom.name);
+./container_of/code.c:	pr_info("name2 = %s\n", pname);
+./container_of/code.c:	/* pointer of type = cointainer_of(pointer, struct <type>, member name) */
+./container_of/code.c:	new_kitten = container_of(&pname, struct kitten, name);
+./container_of/code.c:	pr_info("Name3 = %s\n", new_kitten->name);
+./container_of/code.c:	pr_info("Furry0 = %d\n", tom.furry);
+./container_of/code.c:	pr_info("Furry = %d\n", new_kitten->furry);
+./container_of/code.c:	pr_info("Furry1 = %d\n", new_kitten->furry);
+./container_of/code.c:static void __exit stops(void)
+./container_of/code.c:module_init(start);
+./container_of/code.c:module_exit(stops);
+./container_of/code.c:MODULE_LICENSE("GPL");
+./wait_queue/code.c:MODULE_LICENSE("GPL");
+./wait_queue/code.c:MODULE_DESCRIPTION("wait queues");
+./wait_queue/code.c:MODULE_VERSION("110");
+./wait_queue/code.c:MODULE_AUTHOR("Arshad Hussain <arshad.super@gmail.com>");
+./wait_queue/code.c:int mfoo(void *);
+./wait_queue/code.c:static int __init start(void)
+./wait_queue/code.c:	init_waitqueue_head(&wq);
+./wait_queue/code.c:	mytask = kthread_create(mfoo, NULL, "my_super_task");
+./wait_queue/code.c:	if (IS_ERR(mytask)) {
+./wait_queue/code.c:		printk(KERN_INFO "kthread failed\n");
+./wait_queue/code.c:	printk(KERN_INFO "***** Hello world! waiting...***** \n");
+./wait_queue/code.c:	wake_up_process(mytask);
+./wait_queue/code.c:	msleep(SLEEP);
+./wait_queue/code.c:	printk(KERN_INFO "***** Attempt 1: The condition is not met... ***** \n");
+./wait_queue/code.c:	 * Wake up from wait queue. Done through wake_up_interruptible().
+./wait_queue/code.c:	wake_up_interruptible(&wq); 
+./wait_queue/code.c:	msleep(SLEEP);
+./wait_queue/code.c:	printk(KERN_INFO "***** Attempt 2: The condition is met... ***** \n");
+./wait_queue/code.c:	wake_up_interruptible(&wq);
+./wait_queue/code.c:	printk(KERN_INFO "***** wake up Done... 2nd time.... pause then exit***** \n");
+./wait_queue/code.c:	msleep(SLEEP); // pause then exit... 
+./wait_queue/code.c:	printk(KERN_INFO "***** Hello world! Done...***** \n");
+./wait_queue/code.c:static void __exit stops(void)
+./wait_queue/code.c:	printk(KERN_INFO "Cleaning up module.\n");
+./wait_queue/code.c:int mfoo(void *arg) {
+./wait_queue/code.c:	printk(KERN_INFO "My thread is running...Oh its going to sleep... \n");
+./wait_queue/code.c:	wait_event_interruptible(wq, condition > 0);
+./wait_queue/code.c:	printk(KERN_INFO "My thread is running again...\n");
+./wait_queue/code.c:module_init(start);
+./wait_queue/code.c:module_exit(stops);
+./rcu/code.c:MODULE_LICENSE("GPL");
+./rcu/code.c:MODULE_DESCRIPTION("RCU Example");
+./rcu/code.c:MODULE_VERSION("110");
+./rcu/code.c:MODULE_AUTHOR("Arshad Hussain <arshad.super@gmail.com>");
+./rcu/code.c: * the multiple readers could happily read a shared resource within a rcu_lock(), and
+./rcu/code.c: * reader will borrow the pointer of other. Stale rcu_read_lock() is not valid.
+./rcu/code.c: * rcu_read_lock()
+./rcu/code.c: * rcu_read_unlock()
+./rcu/code.c: * calling synchronize_rcu().
+./rcu/code.c:static LIST_HEAD(head_mylist);
+./rcu/code.c:static void destroy_old_structure(struct rcu_head *rcu_h)
+./rcu/code.c:	t = container_of(rcu_h, struct mylist, rcu);
+./rcu/code.c:	printk(KERN_INFO "Deleted old reference\n");
+./rcu/code.c:		printk(KERN_INFO "Value (t) not valid. Will exit.\n");
+./rcu/code.c:	printk(KERN_INFO "Data = %d\n", t->data);
+./rcu/code.c:	kfree(t);
+./rcu/code.c:static int __init start(void)
+./rcu/code.c:	printk(KERN_INFO "Hello!\n");
+./rcu/code.c:	for(i=0; i<element; i++) {
+./rcu/code.c:		val[i] = kmalloc(sizeof(struct mylist), GFP_KERNEL);
+./rcu/code.c:		if(!val[i]) {
+./rcu/code.c:			printk(KERN_INFO "Malloc failed for %d\n", i);
+./rcu/code.c:	for(i=0; i<element; i++) {
+./rcu/code.c:		spin_lock(&mylist_lock);
+./rcu/code.c:		list_add_rcu(&val[i]->node, &head_mylist);
+./rcu/code.c:		spin_unlock(&mylist_lock);
+./rcu/code.c:	 * rcu_read_lock() and rcu_read_unlock()
+./rcu/code.c:	list_for_each_entry(tmp1, &head_mylist, node) {
+./rcu/code.c:		rcu_read_lock();
+./rcu/code.c:		printk(KERN_ERR "value(0) = %d\n", tmp1->data);
+./rcu/code.c:		rcu_read_unlock();
+./rcu/code.c:	synchronize_rcu();
+./rcu/code.c:	list_for_each_entry(tmp1, &head_mylist, node) {
+./rcu/code.c:		rcu_read_lock();
+./rcu/code.c:			spin_lock(&mylist_lock);
+./rcu/code.c:			list_replace_rcu(&tmp1->node, &new_node.node);
+./rcu/code.c:			spin_unlock(&mylist_lock);
+./rcu/code.c:		rcu_read_unlock();
+./rcu/code.c:	synchronize_rcu();
+./rcu/code.c:	list_for_each_entry(tmp1,&head_mylist, node) {
+./rcu/code.c:		rcu_read_lock();
+./rcu/code.c:		printk(KERN_ERR "value(1) = %d\n", tmp1->data);
+./rcu/code.c:		rcu_read_unlock();
+./rcu/code.c:	spin_lock(&mylist_lock);
+./rcu/code.c:	list_for_each_entry(tmp1, &head_mylist, node) {
+./rcu/code.c:		//rcu_read_lock();
+./rcu/code.c:			list_del_rcu(&tmp1->node);
+./rcu/code.c:			spin_unlock(&mylist_lock);
+./rcu/code.c:			call_rcu(&tmp1->rcu, destroy_old_structure);
+./rcu/code.c:		//rcu_read_unlock();
+./rcu/code.c:		spin_unlock(&mylist_lock);
+./rcu/code.c:	list_for_each_entry(tmp1,&head_mylist, node) {
+./rcu/code.c:		rcu_read_lock();
+./rcu/code.c:		printk(KERN_ERR "value(2) = %d\n", tmp1->data);
+./rcu/code.c:		rcu_read_unlock();
+./rcu/code.c:static void __exit end(void)
+./rcu/code.c:	printk(KERN_INFO "Goodbye\n");
+./rcu/code.c:module_init(start);
+./rcu/code.c:module_exit(end);
+./link_list/code.c:MODULE_LICENSE("GPL");
+./link_list/code.c:MODULE_DESCRIPTION("link list");
+./link_list/code.c:MODULE_VERSION("110");
+./link_list/code.c:MODULE_AUTHOR("Arshad Hussain <arshad.super@gmail.com>");
+./link_list/code.c:void print_list(void);
+./link_list/code.c:static int __init start(void)
+./link_list/code.c:	INIT_LIST_HEAD(&mylist);
+./link_list/code.c:	for(i=0; i<5; i++) {
+./link_list/code.c:		fvar[i] = kmalloc(sizeof(struct foo), GFP_KERNEL);
+./link_list/code.c:			pr_info("Kmalloc Failed %d\n", i);
+./link_list/code.c:	list_add(&fvar[0]->list, &mylist);
+./link_list/code.c:	list_add(&fvar[1]->list, &mylist);
+./link_list/code.c:	list_add(&fvar[2]->list, &mylist);
+./link_list/code.c:	list_add(&fvar[3]->list, &mylist);
+./link_list/code.c:	list_add(&fvar[4]->list, &mylist);
+./link_list/code.c:	print_list();
+./link_list/code.c:	list_add_tail(&temp.list, &mylist);
+./link_list/code.c:	print_list();
+./link_list/code.c:	list_del(&temp.list);
+./link_list/code.c:	list_del(&fvar[0]->list);
+./link_list/code.c:	print_list();
+./link_list/code.c:	for(i=0; i<5; i++)
+./link_list/code.c:		kfree(fvar[i]);
+./link_list/code.c:static void __exit stops(void)
+./link_list/code.c:void print_list()
+./link_list/code.c:	list_for_each_entry(f, &mylist, list) {
+./link_list/code.c:		pr_info("Data = %d\n", f->a);
+./link_list/code.c:	pr_info("==============\n");
+./link_list/code.c:module_init(start);
+./link_list/code.c:module_exit(stops);
+./memory1/code.c:MODULE_LICENSE("GPL");
+./memory1/code.c:MODULE_DESCRIPTION("Memory");
+./memory1/code.c:MODULE_VERSION("110");
+./memory1/code.c:MODULE_AUTHOR("Arshad Hussain <arshad.super@gmail.com>");
+./memory1/code.c:static int __init code_init(void)
+./memory1/code.c:	 * Similar to alloc_pages(mask,0);
+./memory1/code.c:	p = alloc_page(GFP_KERNEL);
+./memory1/code.c:	if(!p) {
+./memory1/code.c:		printk(KERN_INFO "alloc_page Alocation failed\n");
+./memory1/code.c:		printk(KERN_INFO "alloc_page Alloation done\n");
+./memory1/code.c:		__free_pages(p,0);
+./memory1/code.c:	p1 = alloc_pages(GFP_KERNEL, 3);
+./memory1/code.c:	if(!p1) {
+./memory1/code.c:		printk(KERN_INFO "alloc_pages Alocation failed\n");
+./memory1/code.c:		printk(KERN_INFO "alloc_pages Alloation done\n");
+./memory1/code.c:		 * macro page_address() - return virtual address that 
+./memory1/code.c:		page = (unsigned long *)page_address(p1);
+./memory1/code.c:		p2 = virt_to_page(page);
+./memory1/code.c:		__free_pages(p1,3);
+./memory1/code.c:	va = __get_free_pages(GFP_KERNEL, 3);
+./memory1/code.c:		printk(KERN_INFO "__get_free_pages Alocation failed\n");
+./memory1/code.c:		printk(KERN_INFO "__get_free_pages Alloation done\n");
+./memory1/code.c:		free_pages(va,3);
+./memory1/code.c:static void __exit code_exit(void) {
+./memory1/code.c:	printk(KERN_INFO "Goodbye, World!\n");
+./memory1/code.c:module_init(code_init);
+./memory1/code.c:module_exit(code_exit);
+./ioctl/ioctl.c:#define QUERY_GET_VARIABLES _IOR('q', 1, int *)
+./ioctl/ioctl.c:#define QUERY_CLR_VARIABLES _IO('q', 2)
+./ioctl/ioctl.c:#define QUERY_SET_VARIABLES _IOW('q', 3, int *)
+./ioctl/ioctl.c:int main(void)
+./ioctl/ioctl.c:	fd = open(DEVICE, O_RDWR);
+./ioctl/ioctl.c:		printf("open failed\n");
+./ioctl/ioctl.c:		printf("make sure insmod code.ko is done\n");
+./ioctl/ioctl.c:	if (ioctl(fd, QUERY_GET_VARIABLES, &q) == -1)
+./ioctl/ioctl.c:		perror("query_apps ioctl get");
+./ioctl/ioctl.c:	printf("five ... done...%d\n",q);
+./ioctl/ioctl.c:	if (ioctl(fd, QUERY_CLR_VARIABLES, &q) == -1)
+./ioctl/ioctl.c:		perror("query_apps ioctl get");
+./ioctl/ioctl.c:	printf("five ... done...CLR\n");
+./ioctl/ioctl.c:	if (ioctl(fd, QUERY_SET_VARIABLES, &q) == -1)
+./ioctl/ioctl.c:		perror("error ioctl get");
+./ioctl/ioctl.c:	printf("five ... done...SET\n");
+./ioctl/ioctl.c:	close(fd);
+./ioctl/code.c:MODULE_LICENSE("GPL");
+./ioctl/code.c:MODULE_VERSION("110");
+./ioctl/code.c:MODULE_DESCRIPTION("Linux module,ioctl example");
+./ioctl/code.c:MODULE_AUTHOR("Arshad Hussain <arshad.super@gmail.com>");
+./ioctl/code.c:#define QUERY_GET_VARIABLES _IOR('q', 1, int *)
+./ioctl/code.c:#define QUERY_CLR_VARIABLES _IO('q', 2)
+./ioctl/code.c:#define QUERY_SET_VARIABLES _IOW('q', 3, int *)
+./ioctl/code.c: * 01.	_IO(MAGIC, SEQ_NO) - Does not need data transfer
+./ioctl/code.c: * 02.	_IOW(MAGIC, SEQ_NO, type) - Write (copy_from_user or get_user)
+./ioctl/code.c: * 03.	_IOR(MAGIC, SEQ_NO, type) - Read (copy_to_user or put_user)
+./ioctl/code.c: * 04.	_IORW(MAGIC, SEQ_NO, type) - Both read/write
+./ioctl/code.c: * #define RESET_DEVICE _IOR('q', 1, int *)
+./ioctl/code.c:int dev_open(struct inode *, struct file *);
+./ioctl/code.c:int dev_release(struct inode *, struct file *);
+./ioctl/code.c://static ssize_t dev_read(struct file *, char *, size_t, loff_t *);
+./ioctl/code.c://static ssize_t dev_write(struct file *, const char *, size_t, loff_t *);
+./ioctl/code.c:long dev_ioctl(struct file *, unsigned int, unsigned long);
+./ioctl/code.c:#if (LINUX_VERSION_CODE < KERNEL_VERSION(2,6,35))
+./ioctl/code.c:	 * Newer kernals has unlocked_ioctl()
+./ioctl/code.c:	 * Older kernels used to have ioctl()
+./ioctl/code.c:static int __init ioctl_init(void)
+./ioctl/code.c:	ret = register_chrdev(majorNumber, DEVICE_NAME, &fops);
+./ioctl/code.c:		printk(KERN_ALERT "failed to register a major number %d\n",ret);
+./ioctl/code.c:	printk(KERN_INFO "registered with major number %d\n",
+./ioctl/code.c:int dev_open(struct inode *inodep, struct file *filep){
+./ioctl/code.c:	printk(KERN_INFO "Device opened\n");
+./ioctl/code.c:int dev_release(struct inode *inodep, struct file *filep){
+./ioctl/code.c:	printk(KERN_INFO "Device successfully closed\n");
+./ioctl/code.c:long dev_ioctl(struct file *filep,
+./ioctl/code.c:			if(copy_to_user((int *)arg, &a, sizeof(unsigned long))) {
+./ioctl/code.c:				printk(KERN_INFO "COPY_TO_USER FAILED\n");
+./ioctl/code.c:			printk(KERN_INFO "CLR_VARIABLES .....\n");
+./ioctl/code.c:			if(copy_from_user(&x, (unsigned int *)arg, sizeof(unsigned long))) {
+./ioctl/code.c:				printk(KERN_INFO "COPY_FROM_USER FAILED\n");
+./ioctl/code.c:				printk(KERN_INFO "I got [%lu] from user\n", x);
+./ioctl/code.c:			printk(KERN_INFO "No matching IOCTL\n");
+./ioctl/code.c:	//printk(KERN_INFO "ioctl now %u, %lu\n",cmd, arg);
+./ioctl/code.c:static void __exit ioctl_exit(void) {
+./ioctl/code.c:	unregister_chrdev(majorNumber, DEVICE_NAME);
+./ioctl/code.c:	printk(KERN_INFO "Goodbye, World!\n");
+./ioctl/code.c:module_init(ioctl_init);
+./ioctl/code.c:module_exit(ioctl_exit);
+./work_queue_global/code.c:#include <linux/delay.h> /* msleep() */
+./work_queue_global/code.c:#include <linux/slab.h>     /* for kmalloc() */
+./work_queue_global/code.c:MODULE_LICENSE("GPL");
+./work_queue_global/code.c:MODULE_DESCRIPTION("work queues :- Global/Shared");
+./work_queue_global/code.c:MODULE_VERSION("110");
+./work_queue_global/code.c:MODULE_AUTHOR("Arshad Hussain <arshad.super@gmail.com>");
+./work_queue_global/code.c:static void do_work_handler(struct work_struct *work)
+./work_queue_global/code.c:	struct work_struct_data *my_data = container_of(work, \
+./work_queue_global/code.c:	pr_info("Inside work handler..., value =  %d\n", my_data->data);
+./work_queue_global/code.c:	msleep(5000);
+./work_queue_global/code.c:	 * Task is put to sleep using wait_event_interruptible()
+./work_queue_global/code.c:	 * Wake up the task using wake_up_interruptible().
+./work_queue_global/code.c:	wake_up_interruptible(&my_data->my_wq);
+./work_queue_global/code.c:	kfree(my_data);
+./work_queue_global/code.c:static int __init start(void)
+./work_queue_global/code.c:	my_data = kmalloc(sizeof(struct work_struct_data), GFP_KERNEL);
+./work_queue_global/code.c:		pr_info("kmalloc failed\n");
+./work_queue_global/code.c:	INIT_WORK(&my_data->unit_of_work, do_work_handler);
+./work_queue_global/code.c:	init_waitqueue_head(&my_data->my_wq);
+./work_queue_global/code.c:	schedule_work(&my_data->unit_of_work);
+./work_queue_global/code.c:	pr_info("I'm going to sleep now ...Value of condition = %d\n",condition);
+./work_queue_global/code.c:	 * Condition is checked every time wait_queue is woken up using wake_up_interruptible()
+./work_queue_global/code.c:	wait_event_interruptible(my_data->my_wq, condition != 0);
+./work_queue_global/code.c:	printk("woken up...Value of condition = %d\n", condition);
+./work_queue_global/code.c:static void __exit stops(void)
+./work_queue_global/code.c:module_init(start);
+./work_queue_global/code.c:module_exit(stops);
+./radix_tree/code.c:#include <linux/delay.h> /* msleep() */
+./radix_tree/code.c:MODULE_LICENSE("GPL");
+./radix_tree/code.c:MODULE_DESCRIPTION("Radix tree");
+./radix_tree/code.c:MODULE_VERSION("110");
+./radix_tree/code.c:MODULE_AUTHOR("Arshad Hussain <arshad.super@gmail.com>");
+./radix_tree/code.c:static int __init start(void)
+./radix_tree/code.c:	printk(KERN_INFO "Start...!\n");
+./radix_tree/code.c:	INIT_RADIX_TREE(&mytree, GFP_KERNEL);
+./radix_tree/code.c:	 * key(5) -> value(14)
+./radix_tree/code.c:	ret = radix_tree_insert(&mytree,key,v);
+./radix_tree/code.c:		printk(KERN_INFO "insert failed\n");
+./radix_tree/code.c:	printk(KERN_INFO "insert success\n");
+./radix_tree/code.c:	r = radix_tree_lookup(&mytree, failkey);
+./radix_tree/code.c:		printk(KERN_INFO "lookup failed\n");
+./radix_tree/code.c:		printk(KERN_INFO "lookup success\n");
+./radix_tree/code.c:	r = radix_tree_lookup(&mytree, key);
+./radix_tree/code.c:		printk(KERN_INFO "lookup failed\n");
+./radix_tree/code.c:		printk(KERN_INFO "lookup success %d\n", *(int*)r);
+./radix_tree/code.c:	r = radix_tree_delete(&mytree, failkey);
+./radix_tree/code.c:		printk(KERN_INFO "delete failed\n");
+./radix_tree/code.c:		printk(KERN_INFO "delete success %d\n", *(int*)r);
+./radix_tree/code.c:	r = radix_tree_delete(&mytree, key);
+./radix_tree/code.c:		printk(KERN_INFO "delete failed\n");
+./radix_tree/code.c:		printk(KERN_INFO "delete success %d\n", *(int*)r);
+./radix_tree/code.c:static void __exit stops(void) {
+./radix_tree/code.c:	printk(KERN_INFO "Goodbye!\n");
+./radix_tree/code.c:module_init(start);
+./radix_tree/code.c:module_exit(stops);
+./mmap/code.c:MODULE_LICENSE("GPL");
+./mmap/code.c:MODULE_DESCRIPTION("mmap() Linux kernel module example");
+./mmap/code.c:MODULE_AUTHOR("Arshad Hussain <arshad.super@gmail.com>");
+./mmap/code.c: * remap_pfn_range(): maps physical memory to user-space process.
+./mmap/code.c: * this is how mmap() is implemented.
+./mmap/code.c: * Call mmap() on a file
+./mmap/code.c: * 	1. device driver will call file_operations->mmap()
+./mmap/code.c: * 	2. will inturn call remap_pfn_range()
+./mmap/code.c: * io_remap_pfn_range()
+./mmap/code.c: * NOTE!!!: ioremap() is _ONLY_ used when mapping I/O memory
+./mmap/code.c: * io_remap_pfn_range()
+./mmap/code.c: * system call mmap() -> is called via file_oprations->mmap()
+./mmap/code.c: * directy. Therefore, user process calls mmap() to remap this
+./mmap/code.c: * 	mmap(void *addr, len, prot, flag, fd, offset);
+./mmap/code.c: * 	mmap(struct file *filep, vm_area_struct *vma);
+./mmap/code.c: * Finally, unmap() to release mapping.
+./mmap/code.c:int dev_open(struct inode *, struct file *);
+./mmap/code.c:int dev_release(struct inode *, struct file *);
+./mmap/code.c://static ssize_t dev_read(struct file *, char *, size_t, loff_t *);
+./mmap/code.c://static ssize_t dev_write(struct file *, const char *, size_t, loff_t *);
+./mmap/code.c:int dev_mmap(struct file *, struct vm_area_struct *);
+./mmap/code.c://int dev_ioctl(struct inode *, struct file *, unsigned int, unsigned long);
+./mmap/code.c:static int __init mmap_example_init(void)
+./mmap/code.c:	ret = register_chrdev(majorNumber, DEVICE_NAME, &fops);
+./mmap/code.c:		printk(KERN_ALERT "failed to register a major number %d\n",ret);
+./mmap/code.c:	printk(KERN_INFO "registered correctly with major number %d\n",
+./mmap/code.c:	buffer = kmalloc(SIZE, GFP_KERNEL);
+./mmap/code.c:		printk(KERN_ALERT "failed to allocate memory \n");
+./mmap/code.c:int dev_open(struct inode *inodep, struct file *filep){
+./mmap/code.c:   printk(KERN_INFO "Device opened\n");
+./mmap/code.c:int dev_release(struct inode *inodep, struct file *filep){
+./mmap/code.c:	if(buffer)
+./mmap/code.c:		kfree(buffer);
+./mmap/code.c:	printk(KERN_INFO "Device successfully closed\n");
+./mmap/code.c:int dev_mmap(struct file *filep, struct vm_area_struct *vma)
+./mmap/code.c:	/* Offset value which is passed in mmap() */
+./mmap/code.c:	/* len which is passed to mmap() */
+./mmap/code.c:	printk(KERN_INFO "Nothing for mmap now %lu %lu\n", size, offset);
+./mmap/code.c:	pfn = virt_to_phys(buffer + offset) >> PAGE_SHIFT;
+./mmap/code.c:	if (remap_pfn_range(vma, vma->vm_start, pfn, size, vma->vm_page_prot)) {
+./mmap/code.c:   		printk(KERN_INFO "mmap allocation FAILED \n");
+./mmap/code.c:   		printk(KERN_INFO "mmap allocation PASSED \n");
+./mmap/code.c:static void __exit mmap_example_exit(void) {
+./mmap/code.c:	if(buffer)
+./mmap/code.c:		kfree(buffer);
+./mmap/code.c:	unregister_chrdev(majorNumber, DEVICE_NAME);
+./mmap/code.c:	printk(KERN_INFO "Goodbye, World!\n");
+./mmap/code.c:module_init(mmap_example_init);
+./mmap/code.c:module_exit(mmap_example_exit);
+./mmap/mmap.c:int main(void)
+./mmap/mmap.c:	fd = open(DEVICE, O_RDWR);
+./mmap/mmap.c:		printf("open failed\n");
+./mmap/mmap.c:		printf("make sure insmod code.ko is done\n");
+./mmap/mmap.c:	 * fake and make mmap() pass from user-space. But
+./mmap/mmap.c:	 * remap_pfn_range() must be called from device driver
+./mmap/mmap.c:	addr = (char*)mmap(NULL, 4096, PROT_READ|PROT_WRITE, 
+./mmap/mmap.c:		printf("Failed to mmap\n");
+./mmap/mmap.c:		close(fd);
+./mmap/mmap.c:	printf("ALL OK\n");
+./mmap/mmap.c:	printf("Char = [%c]\n", addr[0]);
+./mmap/mmap.c:	close(fd);
+./memory2/code.c:MODULE_LICENSE("GPL");
+./memory2/code.c:MODULE_VERSION("110");
+./memory2/code.c:MODULE_DESCRIPTION("memory fucntion examples");
+./memory2/code.c:MODULE_AUTHOR("Arshad Hussain <arshad.super@gmail.com>");
+./memory2/code.c:static int __init memory_init(void)
+./memory2/code.c:	ptr = kzalloc(sizeof(int)*5,GFP_KERNEL);
+./memory2/code.c:	if(!ptr) {
+./memory2/code.c:		printk("kzalloc failed\n");
+./memory2/code.c:		kzfree(ptr);
+./memory2/code.c:	ptr = kmalloc(sizeof(int)*5,GFP_KERNEL);
+./memory2/code.c:	if(!ptr) {
+./memory2/code.c:		printk("kmalloc failed\n");
+./memory2/code.c:		phy = virt_to_phys(ptr);
+./memory2/code.c:		kfree(ptr);
+./memory2/code.c:	 * vmalloc() slower than kmalloc, because...
+./memory2/code.c:	ptr = vmalloc(40960);
+./memory2/code.c:	if(!ptr) {
+./memory2/code.c:		printk("vmalloc failed\n");
+./memory2/code.c:		vfree(ptr);
+./memory2/code.c:	 * kmap()/kunmap()
+./memory2/code.c:	 * We have to specially map memory using kmap()
+./memory2/code.c:	p = alloc_pages(GFP_HIGHUSER, 3); /* allocate high mem */
+./memory2/code.c:	if(!p) {
+./memory2/code.c:		printk(KERN_INFO "alloc_pages Allocation failed\n");
+./memory2/code.c:		printk(KERN_INFO "alloc_pages Allocation done\n");
+./memory2/code.c:		ptr = (unsigned int *)kmap(p);
+./memory2/code.c:		kunmap(p);
+./memory2/code.c:		__free_pages(p,3);
+./memory2/code.c:static void __exit memory_exit(void) {
+./memory2/code.c:	printk(KERN_INFO "Goodbye, World!\n");
+./memory2/code.c:module_init(memory_init);
+./memory2/code.c:module_exit(memory_exit);
+./kprobe1/code.c:MODULE_LICENSE("GPL");
+./kprobe1/code.c:MODULE_DESCRIPTION("kprobe - With dynamic function probe");
+./kprobe1/code.c:MODULE_VERSION("110");
+./kprobe1/code.c:MODULE_AUTHOR("Arshad Hussain <arshad.super@gmail.com>");
+./kprobe1/code.c:int pre_handler(struct kprobe *probe, struct pt_regs *regs)
+./kprobe1/code.c:	printk(KERN_INFO "Inside pre_handler.\n");
+./kprobe1/code.c:void post_handler(struct kprobe *probe, struct pt_regs *regs, unsigned long flags)
+./kprobe1/code.c:	printk(KERN_INFO "Inside POST_handler.\n");
+./kprobe1/code.c:static int __init start(void)
+./kprobe1/code.c:	printk(KERN_INFO "Entering.....\n");
+./kprobe1/code.c:	kp.addr = (kprobe_opcode_t *) kallsyms_lookup_name("submit_bio");
+./kprobe1/code.c:	if(!kp.addr) {
+./kprobe1/code.c:		printk(KERN_ERR "Failed to get address of kernel fucntion submit_bio\n");
+./kprobe1/code.c:	register_kprobe(&kp);
+./kprobe1/code.c:static void __exit stops(void)
+./kprobe1/code.c:	unregister_kprobe(&kp);
+./kprobe1/code.c:	printk(KERN_INFO "Exiting.....\n");
+./kprobe1/code.c:module_init(start);
+./kprobe1/code.c:module_exit(stops);
+./kprobe1/code.c:MODULE_LICENSE("GPL");
+./basic/code.c:MODULE_LICENSE("GPL");
+./basic/code.c:MODULE_DESCRIPTION("A noop Linux module");
+./basic/code.c:MODULE_VERSION("110");
+./basic/code.c:MODULE_AUTHOR("Arshad Hussain <arshad.super@gmail.com>");
+./basic/code.c:static int __init km_init(void) 
+./basic/code.c:	printk(KERN_INFO "Hello!\n");
+./basic/code.c:static void __exit km_exit(void) {
+./basic/code.c:	printk(KERN_INFO "Goodbye\n");
+./basic/code.c:module_init(km_init);
+./basic/code.c:module_exit(km_exit);
+./interrupt01/code.c:	printk(KERN_INFO "inside interrupt\n");
+./interrupt01/code.c:static int __init code_init(void)
+./interrupt01/code.c:	printk(KERN_INFO "***** Hello world! Interrupt ***** \n");
+./interrupt01/code.c:	 * function my_interrupt() callback is called.
+./interrupt01/code.c:	if (request_irq(irq, my_interrupt, IRQF_SHARED, "my_interrupt", &my_dev_id)) {
+./interrupt01/code.c:		printk(KERN_INFO "request_irq error %d\n", irq);
+./interrupt01/code.c:static void __exit code_cleanup(void)
+./interrupt01/code.c:	printk(KERN_INFO "Cleaning up module.\n");
+./interrupt01/code.c:	synchronize_irq(irq);
+./interrupt01/code.c:	free_irq(irq, &my_dev_id);
+./interrupt01/code.c:module_init(code_init);
+./interrupt01/code.c:module_exit(code_cleanup);
+./interrupt01/code.c:MODULE_LICENSE("GPL");
+./interrupt01/code.c:MODULE_DESCRIPTION("interrupt example");
+./interrupt01/code.c:MODULE_AUTHOR("Arshad Hussain <arshad.super@gmail.com>");
+./spinlock/code.c:#include <linux/delay.h> /* msleep() */
+./spinlock/code.c:MODULE_LICENSE("GPL");
+./spinlock/code.c:MODULE_DESCRIPTION("spinlock");
+./spinlock/code.c:MODULE_VERSION("110");
+./spinlock/code.c:MODULE_AUTHOR("Arshad Hussain <arshad.super@gmail.com>");
+./spinlock/code.c: * 	when holding the spinlock. Task waiting(spin waiting) on 
+./spinlock/code.c: * - However, on single CPU spin_lock_irqsave() is used to disable
+./spinlock/code.c: * - On SMP spin_lock_irqsave() - disables interrupt on current cpu.
+./spinlock/code.c: * Spinlock not to be called code which does kmalloc(x, GFP_KERNEL); as 
+./spinlock/code.c: * spin_lock_init(sl);
+./spinlock/code.c:static int __init start(void)
+./spinlock/code.c:	printk(KERN_INFO "Start...!\n");
+./spinlock/code.c:	spin_lock_init(&sl);
+./spinlock/code.c:	spin_lock(&sl);
+./spinlock/code.c:	i = spin_is_locked(&sl);
+./spinlock/code.c:		printk(KERN_INFO "spin_is_lock:Lock is free");
+./spinlock/code.c:		printk(KERN_INFO "spin_is_lock:Lock is taken");
+./spinlock/code.c:	i = spin_trylock(&sl);
+./spinlock/code.c:		printk(KERN_INFO "spin_trylock:Lock already taken.");
+./spinlock/code.c:		printk(KERN_INFO "spin_trylock:Lock is free and lock taken");
+./spinlock/code.c:	spin_unlock(&sl);
+./spinlock/code.c:	spin_lock_irqsave(&sl, flag);
+./spinlock/code.c:	spin_unlock_irqrestore(&sl, flag);
+./spinlock/code.c:	spin_lock_irq(&sl);
+./spinlock/code.c:	spin_unlock_irq(&sl);
+./spinlock/code.c:	 * If data accessed from 1)process and 2) BH(bottom half) context.
+./spinlock/code.c:	spin_lock_bh(&sl);
+./spinlock/code.c:	spin_unlock_bh(&sl);
+./spinlock/code.c:static void __exit stops(void) {
+./spinlock/code.c:	printk(KERN_INFO "Goodbye!\n");
+./spinlock/code.c:module_init(start);
+./spinlock/code.c:module_exit(stops);
