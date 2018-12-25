@@ -1,0 +1,8 @@
+***** Hello world! waiting...*****
+My thread is running...Oh its going to sleep...
+***** Attempt 1: The condition is not met... *****
+***** Attempt 2: The condition is met... *****
+***** wake up Done... 2nd time.... pause then exit*****
+My thread is running again...
+***** Hello world! Done...*****
+Cleaning up module.
