@@ -142,3 +142,46 @@ VMA is part of mm_struct and is organised as below.
                     |------->[vm_area_struct] ——-> MMAP
 				            |-----> ETC
 ```
+
+### FILESYSTEM
+
+Filesystem or file-system is the part of kernel code that allows users to create, write and retrieve data or files in a very easy manner. How the disk space is utilised, where file is stored this is hidden from user. Linux goes one step ahead, by allowing a plethora of filesystem from which users can select for his purpose. This is achieved by having an abstraction layer called VFS which sits on top of file system. Let see how this works.
+
+#### The VFS
+
+VFS or the Virtual Filesystem Switch is an abstraction layer. This layer has set of operations which it supports. For few operations this layer defines them which we call as generic operations and is not FS specific. For other it lets the filesystem define them. For example the allocation of a block for ext2 will be different from fat32 or a XFS. This is defined by their respective FS. Every FS which is written for Linux kernel must support these minimum VFS operations. 
+
+- Super block operations : How whole FS is defined and  is mounted and unmounted
+- Inode operation : Where files are stored and how its buffer is created
+- Dentry operation: How traverse is done
+- File operation: How open file is handled
+
+```
+
+                                    User Space Issues a Read/Write (IO)
+                                    -----------------------------------
+				    System Call (read()/write())
+				    -----------------------------------
+				    VFS intercepts the Call
+ 			            -----------------------------------
+				    Depending upon what FS it is meant for XFS or EXT
+	             		    -----------------------------------
+	                            Generic Block Layer
+		            	    -----------------------------------
+				    Device Driver for Disk/Floppy/CDROM
+			            -----------------------------------
+				    Reads / Writes to Actual Device
+				    and raise an Hardware Interrupt when done
+```
+
+Most of the call stack looks fairly straight forward. We will touch upon two important aspects first, where it decides what FS to make call and second how it pushes IO down to device or disk. The second will be covered more in block layer section. In this section we will discuss when any how  VFS knows about what FS to call. We take example of read/write as we go in detail.
+
+#### The write path
+
+#### The read path
+
+
+
+
+
+
