@@ -123,7 +123,8 @@ User space stack pointer is discouraged and not used in kernel space. Therefore 
 
 - copy_to_user(): Copy from kernel to user space.
 - copy_from_user(): Copy from user space to kernel space
-- Virtual Memory Area (VMA)
+
+#### Virtual Memory Area (VMA)
 
 Linux kernel keeps track of process mapping using VMA. Individual Process VMA includes 
 - code area
