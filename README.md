@@ -79,7 +79,7 @@ This brings us to important concepts.
 
 #### API to work with Memory
 
-kmalloc(): This API returns a logical address. Returns address from LOW_MEMORY. That is, it is virtual and mapped. Since it is pre-mapped this is continuos in virtual as well as physical address space. That is, it is continuous in diagram -A as well as diagram -B. Memory which is continuous in physical memory can be converter to and from virtual to physical. This API returns number of bytes requested and depending on the flags this API sleeps.  GFP_KERNEL flag can sleep. GFP_ATOMIC for interrupt and will not sleep.
+kmalloc(): This API returns a logical address. Returns address from LOW_MEMORY. That is, it is virtual and mapped. Since it is pre-mapped this is continuos in virtual as well as physical address space. That is, it is continuous in diagram -A as well as diagram -B. Memory which is continuous in physical memory can be converted to and from virtual to physical. This API returns number of bytes requested and depending on the flags this API sleeps.  GFP_KERNEL flag can sleep. GFP_ATOMIC for interrupt and will not sleep.
 
 vmalloc(): This API ultimately returns a logical address. It first gets memory from HIGH_MEMORY then creates a map and converts it into logical address and then then returns to user. This makes vmalloc() slower as it fetches memory and creates the mapping. This also results in vmalloc() returning memory which is not continuous in physical memory, however it is continuous in virtual memory.
 
