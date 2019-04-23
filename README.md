@@ -117,7 +117,8 @@ API to create such pools are :-
 
 #### mmap
 mmap() call is part of file_system operation which maps kernel memory to user space. In other words mmap remaps kernel memory region into user-space address space. Internally, mmap calls **remap_pfn_range()** from within kernel to map physical memory to user-space process.
-User space to Kernel space transfer
+
+#### User space to Kernel space transfer
 
 User space stack pointer is discouraged and not used in kernel space. Therefore if data needs to be transfer between  user-space and kernel space specific API must be used.
 
