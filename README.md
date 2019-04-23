@@ -134,13 +134,14 @@ Linux kernel keeps track of process mapping using VMA. Individual Process VMA in
 
 VMA is part of mm_struct and is organised as below.
 ```
-[Current] ———> [ mm_struct ]
-                    |—————> [vm_area_struct] ——> TEXT
-		                |
-                    |------>[vm_area_struct] ——-> DATA
-                    |
-                    |------->[vm_area_struct] ——-> MMAP
-				            |-----> ETC
+[Current] ———> [task_struct] -----> [ mm_struct ]
+                                         |—————> [vm_area_struct] ——> TEXT
+		                         |
+                                         |------>[vm_area_struct] ——-> DATA
+                                         |
+                                         |------->[vm_area_struct] ——-> MMAP
+					 |
+				         |-----> ETC
 ```
 
 ### FILESYSTEM
