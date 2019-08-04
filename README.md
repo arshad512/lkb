@@ -25,7 +25,7 @@ struct nameidata: Keeps path information.
 #### Memory Management
 ```
 struct mm_struct: Summary of whole process memory.
-struct vm_area_struct: Maintains individual summary of segments within a process. Eg code, data, 			  heap,mmap 
+struct vm_area_struct: Maintains individual summary of segments within a process. Eg code, data,heap and mmap 
 struct namespace: Data caching associated with inode.
 struct page: Represent a portion of physical memory
 ```
@@ -34,7 +34,7 @@ struct page: Represent a portion of physical memory
 struct request_queue: IO queue associated with device
 struct request: Individual request within a request_queue
 struct bio: Represents an unit of IO. A request_queue have many bio’s
-struct bio_vec: Keeps 1) buffer info which is to be transferred, 2) start end of the buffer to be 				transferred. 3) struct page information 
+struct bio_vec: Keeps 1) buffer info which is to be transferred, 2) start end of the buffer to be transferred. 3) struct page information 
 struct gendisk: Represent a physical disk.
 ```
 ### Memory Management
