@@ -8,9 +8,9 @@
 
 #### Process
 ```
-struct task_struct : Represent a process within a kernel.
-struct fs_struct: Maintains association of process with struct FILE.
-struct file_struct: Keeps info of open file.
+struct task_struct : Represent a process within a kernel
+struct file_struct: Keeps info of open file
+struct fs_struct: Maintains association of process with struct FILE
 ```
 #### Filesystem
 ```
