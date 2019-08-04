@@ -39,7 +39,7 @@ struct gendisk: Represent a physical disk.
 ```
 ### Memory Management
 
-During boot, the physical RAM is determine by the BIOS and passed to Linux Kernel. The address space is determine by the segment selector which points to a flat 32bit address. This is compulsory and every address must pass through this. This is called **LINEAR ADDRESS**. This liner address is then passed through paging unit and this is what we use. On a protected mode OS, physical memory cannot access without translation. All user-space and kernel-space gets a virtual address which must be translated (using MMU) to ultimately reach the physical RAM. To speed up translation, a cache of already translated VA to PA is kept and is know as TLB (Translated look aside buffer). If mapping is found in TLB the physical address is returned whiteout going through translation.
+During boot, the physical RAM is determine by the BIOS and passed to Linux Kernel. The address space is determine by the segment selector which points to a flat 32bit address. This is compulsory and every address must pass through this. This is called **LINEAR ADDRESS**. This liner address is then passed through paging unit and this is what we use. On a protected mode OS, physical memory cannot access without translation. All user-space and kernel-space gets a virtual address which must be translated (using MMU) to ultimately reach the physical RAM. To speed up translation, a cache of already translated VA to PA is kept and is know as TLB (Translated look aside buffer). If mapping is found in TLB the physical address is returned without going through translation.
 ```
 Virtual Memory 
      |___TLB
