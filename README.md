@@ -178,7 +178,7 @@ VFS or the Virtual Filesystem Switch is an abstraction layer. This layer has set
 
 Most of the call stack looks fairly straight forward. We will touch upon two important aspects first, where it decides what FS to make call and second how it pushes IO down to device or disk. The second will be covered more in block layer section. In this section we will discuss when any how  VFS knows about what FS to call. We take example of read/write as we go in detail.
 
-### IOCTL
+#### IOCTL
 IOCTL is a system call which is device specific and cannot be expressed with reqular system calls. Example Eject CD-ROM or Sending Specific SCSI to underlying device
 
 #### The write path
