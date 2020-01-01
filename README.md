@@ -181,6 +181,8 @@ Most of the call stack looks fairly straight forward. We will touch upon two imp
 #### IOCTL
 IOCTL is a system call which is device specific and cannot be expressed with reqular system calls. Example Eject CD-ROM or Sending Specific SCSI to underlying device
 
+#### open syscall
+
 #### The write path
 
 #### The read path
