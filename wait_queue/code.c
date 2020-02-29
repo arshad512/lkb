@@ -21,6 +21,11 @@ MODULE_AUTHOR("Arshad Hussain <arshad.super@gmail.com>");
 #define SLEEP 2000
 
 int mfoo(void *);
+/*
+ * When a process is waiting on external event. It is removed from run-queue and put into wait-queue until that event is met.
+ * Insert process into wait-queue through a function add_wait_queue(), this is exclusive (any time event is met this process
+ * will be woken up). Non-Exclusive on other hand is event not shared by any process
+ */
 
 /* Defines a task within kernel */
 struct task_struct *mytask;
