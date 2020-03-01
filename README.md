@@ -193,6 +193,41 @@ Broadly, within kernel open works as:-
 
 #### The read path
 
+#### Interrupts
+CPU runs in two modes. First is privilige mode, where **all** instructions are enabled. Normally this is known as kernel mode. Second, non-privilige mode. This is restricited mode where user application runs. Every time an user application wants to access kernel mode it **traps** into kernel mode via **descripters gates** or syscalls. Once this happens, this is knows as **kernel running on behalf of process** or process context where it is leagal for a process to sleep. There is another context, which is asycnronous and is called **interrupt context** this is when a interrupt is triggred and here interrup cannot sleep.
+
+When an interrupt is raised on a CPU, that interrupt is disabled. That means no interrupt of same kind can be horned again until this interrupt is re-enabled. However, other interrupts can still be serviced. Other CPU (on SMP) can still take this interrupt. 
+
+All handlers share one interrupt stack per processor. 
+
+Let us quickly look at preemption. Preemption is a kernel feature, if enabled will allow kernel threads to forcefully perform context switch on behalf of higher priority process. There are three option to tune a kernel for pre-emption...
+1. No preemption for Servers.
+2. Voluntary kernel preemption (Desktops)
+3. Pre-emptive Kernel (low-latency desktops)
+
+To understand more. Let us take a simple example. 
+
+1. Assume there are two threads. Thread 1, which has the highest priority. And Thread 2 which has a normal priority. 
+2. Also assume that Thread 1 starts running for 5 seconds. Then it sleeps for 3 seconds and finally wakes up and runs for 4 seconds.
+3. Third, assume that Thread 2 starts running and calls kernel code which  take 5 seconds to complete.
+
+Case where there is no preemption.
+- Thread 1 starts running.					[0 Seconds elapse]
+- Thread 1 continues to run for 5 seconds, then sleeps for 3s.	[0 + 5 seconds = 5 seconds elapse]
+- Thread 2 gets CPU TIME and runs for 5 seconds			[0 + 5 + 5 seconds = 15 Seconds elapse]
+- However, Thread 1 wakes up after 3 seconds and is forced 
+to wait as kernel code cannot be schedule in non premetaive
+kernel.
+- Thread 2 completes. Then thread 1 wakes up and complets. 
+
+With preemptive kernel the high priority thread 1 will immediately force kernel code to yield, which will make thread 1 resume immediately after sleeping.
+
+
+
+
+
+
+
 
 
 
