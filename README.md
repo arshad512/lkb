@@ -186,8 +186,9 @@ Any operation of file starts with open() call. Open takes pathname of file and a
 Broadly, within kernel open works as:-
 - First it copies pathname and permission to kernel space via **getname()** routine.
 - Second, It finds first empty file-descriptor and reserves it.
-- Third, it call **filep_open()** routine which does the pathname lookup. This on success fills up **namei** data-structure and gets the corresponding **inode** data-structure. This also set's up and adds an entry in the **dentry cache** if this is first time lookup.
-- Finally, it calls **fd_install()** and returns the final FD
+- Third, it call **filep_open()** routine which does the pathname lookup using **namei()**. This on success fills up **nameidata** data-structure and gets the corresponding **inode** data-structure. The **nameidata** holds **dentry** struct which intrun holds **inode**. On success, it also sets up and adds an entry in the **dentry cache** if this is first time lookup.
+- Finally, it calls **fd_install()** and returns the final FD to user process.
+- For kernel space it returns **struct FILE** on success - which associates file process is trying to open with process.
 
 #### The write path
 
