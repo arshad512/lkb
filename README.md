@@ -259,6 +259,23 @@ module_driver(userio_misc, misc_register, misc_deregister);
 - ACPI : 
 - APM : 
 - NUMA : 
+- NAPI and IRQ : 
+- DAC :
+- LSM :
+- POSIX capabilities : 
+- Kernel Self protection project : 
+- CPU Frequency sharing :
+- RTOS : 
+- SystemTap :
+- Kprobes :
+- Ftrace :
+- Perf :
+- eBPF :
+- SysRq Keys :
+- Kallsysms : 
+
+
+
 
 
 
