@@ -240,7 +240,7 @@ CASE 3: SMP with no premption
 CASE 4: SMP with preemption enabled
 - Same as case 3. Preemption only happens on retuning from syscall and interupts if count is 0. Returning to kernel from an interrupt handler, only if preempt_count is zero. Here increae preemtpion and disable interrupt.
 
-#### Miscellaneous
+### Miscellaneous
 - module_driver() Macro : Macro used to get away with boiler-plate module_init/module_exit function in the driver. If module_init and/or module_exit does not do much this **single** line macro can replace the the whole  module_init()/module_exit() fuction in the driver. Eg (From the kernel source)
 
 static struct miscdevice userio_misc = {
