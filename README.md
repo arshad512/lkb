@@ -242,13 +242,14 @@ CASE 4: SMP with preemption enabled
 
 ### Miscellaneous
 - module_driver() Macro : Macro used to get away with boiler-plate module_init/module_exit function in the driver. If module_init and/or module_exit does not do much this **single** line macro can replace the the whole  module_init()/module_exit() fuction in the driver. Eg (From the kernel source)
-
+```
 static struct miscdevice userio_misc = {
 	.fops	= &userio_fops,
 	.etc...
 };
 module_driver(userio_misc, misc_register, misc_deregister);
-
+```
+- dev_printk : Very similar to standard printk() we are so used to. This additional passes the **struct device** pointer for additional logging info. **struct device** under linux kernel represents the any **device** attached to the system.
 - hot plug : 
 - major and minor number : 
 - udev : 
